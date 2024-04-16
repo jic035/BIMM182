@@ -2,12 +2,17 @@ import argparse
 from Bio import SeqIO
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Perform local alignment of two DNA sequences.")
+    parser = argparse.ArgumentParser(description="Perform local alignment on two DNA sequences. Enter signed scores.")
     parser.add_argument('seq_files', type=str, help='FASTA file containing two sequences')
-    parser.add_argument('-m', '--match', type=int, default=2, help='Match score')
-    parser.add_argument('-s', '--mismatch', type=int, default=-1, help='Mismatch score')
+    parser.add_argument('-m', '--match', type=int, default=2, help='Match reward')
+    parser.add_argument('-s', '--mismatch', type=int, default=-1, help='Mismatch penalty')
     parser.add_argument('-d', '--indel', type=int, default=-1, help='Indel penalty')
     parser.add_argument('-a', '--alignment', action='store_true', help='Display the alignment')
+    # action='store_true'
+    # if the specific argument is provided in the command line, 
+    # then the corresponding attribute is set to True. If the 
+    # argument is not provided, then the attribute is set to 
+    # False by default.
     return parser.parse_args()
 
 def read_sequences(filename):
@@ -17,9 +22,9 @@ def read_sequences(filename):
     return sequences[0].seq, sequences[1].seq
 
 def initialize_scoring_matrix(rows, cols):
-    return [[0] * cols for _ in range(rows)]
+    return [[0] * cols for _ in range(rows)] # Local alignment: all 0's, including first column/row
 
-def calculate_local_alignment(seq1, seq2, match, mismatch, indel):
+def calculate_local_alignment(seq1, seq2, match, mismatch, indel): # All scores are with signs
     rows = len(seq1) + 1
     cols = len(seq2) + 1
     score_matrix = initialize_scoring_matrix(rows, cols)
@@ -28,10 +33,10 @@ def calculate_local_alignment(seq1, seq2, match, mismatch, indel):
 
     for i in range(1, rows):
         for j in range(1, cols):
-            match_score = score_matrix[i-1][j-1] + (match if seq1[i-1] == seq2[j-1] else mismatch)
-            del_score = score_matrix[i-1][j] + indel
-            ins_score = score_matrix[i][j-1] + indel
-            score = max(0, match_score, del_score, ins_score)
+            match = score_matrix[i-1][j-1] + (match if seq1[j-1] == seq2[i-1] else mismatch)
+            delete = score_matrix[i-1][j] + indel
+            insert = score_matrix[i][j-1] + indel
+            score = max(0, match, delete, insert)  # Adding free-ride for local alignment
             score_matrix[i][j] = score
 
             if score > max_score:
