@@ -47,9 +47,9 @@ def calculate_local_alignment(seq1, seq2, match, mismatch, indel): # All scores 
 
 def traceback(score_matrix, seq1, seq2, start_pos, match, mismatch, indel):
     alignment = []
-    i, j = start_pos
+    i, j = start_pos # Start from max_pos recorded in score matrix
     while i > 0 and j > 0 and score_matrix[i][j] > 0:
-        if seq1[i-1] == seq2[j-1]:
+        if seq1[i-1] == seq2[j-1]: # match/mismatch
             alignment.append((seq1[i-1], seq2[j-1]))
             i -= 1
             j -= 1
