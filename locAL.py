@@ -1,4 +1,5 @@
 import argparse
+from typing import Tuple
 from Bio import SeqIO
 
 def parse_args():
@@ -21,61 +22,85 @@ def read_sequences(filename):
         raise ValueError("Input file must contain exactly two sequences.")
     return sequences[0].seq, sequences[1].seq
 
-def initialize_scoring_matrix(rows, cols):
-    return [[0] * cols for _ in range(rows)] # Local alignment: all 0's, including first column/row
-
-def calculate_local_alignment(seq1, seq2, match, mismatch, indel): # All scores are with signs
-    rows = len(seq1) + 1
-    cols = len(seq2) + 1
-    score_matrix = initialize_scoring_matrix(rows, cols)
+def LocalAlignment(s: str, t: str, match_reward: int, mismatch_penalty: int, indel_penalty: int) -> Tuple[int, str, str]:
+    s_len = len(s)
+    t_len = len(t)
+    score_matrix = [[0] * (s_len + 1) for _ in range(t_len + 1)]
+    backtrack = [[None] * (s_len + 1) for _ in range(t_len + 1)]
     max_score = 0
-    max_pos = (0, 0)
+    max_position = (0, 0)
+    # Do not initialize first column/row to indel penalty 
+    # Fill the scoring matrix
+    for i in range(1, t_len + 1):
+        for j in range(1, s_len + 1):
+            match = score_matrix[i-1][j-1] + (match_reward if s[j-1] == t[i-1] else mismatch_penalty)
+            delete = score_matrix[i-1][j] + indel_penalty
+            insert = score_matrix[i][j-1] + indel_penalty
+            score_matrix[i][j] = max(0, match, delete, insert)  # Adding free-ride
+            if score_matrix[i][j] == match:
+                backtrack[i][j] = "diag"
+            elif score_matrix[i][j] == delete:
+                backtrack[i][j] = "up"
+            elif score_matrix[i][j] == insert:
+                backtrack[i][j] = "left"
+            # Update max score
+            if score_matrix[i][j] >= max_score:
+                max_score = score_matrix[i][j]
+                max_position = (i, j)
 
-    for i in range(1, rows):
-        for j in range(1, cols):
-            match = score_matrix[i-1][j-1] + (match if seq1[j-1] == seq2[i-1] else mismatch)
-            delete = score_matrix[i-1][j] + indel
-            insert = score_matrix[i][j-1] + indel
-            score = max(0, match, delete, insert)  # Adding free-ride for local alignment
-            score_matrix[i][j] = score
-
-            if score > max_score:
-                max_score = score
-                max_pos = (i, j)
-
-    return max_score, max_pos, score_matrix
-
-def traceback(score_matrix, seq1, seq2, start_pos, match, mismatch, indel):
-    alignment = []
-    i, j = start_pos # Start from max_pos recorded in score matrix
-    while i > 0 and j > 0 and score_matrix[i][j] > 0:
-        if seq1[i-1] == seq2[j-1]: # match/mismatch
-            alignment.append((seq1[i-1], seq2[j-1]))
+    # Traceback from the best local alignment
+    i, j = max_position
+    aligned_s, aligned_t = '', ''
+    while score_matrix[i][j] != 0:
+        if backtrack[i][j] == "diag":
+            aligned_s = s[j-1] + aligned_s
+            aligned_t = t[i-1] + aligned_t
             i -= 1
             j -= 1
-        elif score_matrix[i-1][j] + indel == score_matrix[i][j]:
-            alignment.append((seq1[i-1], '-'))
+        elif backtrack[i][j] == "up":
+            aligned_s = '-' + aligned_s
+            aligned_t = t[i-1] + aligned_t
             i -= 1
+        elif backtrack[i][j] == "left":
+            aligned_s = s[j-1] + aligned_s
+            aligned_t = '-' + aligned_t
+            j -= 1
+
+    return max_score, aligned_s, aligned_t
+
+def format_blast_style_alignment(seq1: str, seq2: str, start1: int, start2: int):
+    alignment_length = len(seq1)
+    match_line = []
+
+    for i in range(alignment_length):
+        if seq1[i] == seq2[i]:
+            match_line.append('|')
         else:
-            alignment.append(('-', seq2[j-1]))
-            j -= 1
-    alignment.reverse()
-    return alignment
+            match_line.append(' ')
+    match_line = ''.join(match_line)
+
+    # Display in chunks if very long
+    chunk_size = 60
+    for i in range(0, alignment_length, chunk_size):
+        end1 = start1 + seq1[i:i+chunk_size].count('-') + len(seq1[i:i+chunk_size].replace('-', ''))
+        end2 = start2 + seq2[i:i+chunk_size].count('-') + len(seq2[i:i+chunk_size].replace('-', ''))
+        print(f"Query  {start1 + 1}  {seq1[i:i+chunk_size]}  {end1}")
+        print(f"             {match_line[i:i+chunk_size]}")
+        print(f"Subject  {start2 + 1}  {seq2[i:i+chunk_size]}  {end2}\n")
+        start1 = end1
+        start2 = end2
 
 def main():
     args = parse_args()
     seq1, seq2 = read_sequences(args.seq_files)
-    max_score, max_pos, score_matrix = calculate_local_alignment(seq1, seq2, args.match, args.mismatch, args.indel)
-
+    max_score, aligned_s, aligned_t = LocalAlignment(seq1, seq2, args.match, args.mismatch, args.indel)
     if args.alignment:
-        alignment = traceback(score_matrix, seq1, seq2, max_pos, args.match, args.mismatch, args.indel)
-        aligned_seq1, aligned_seq2 = zip(*alignment)
         print("Alignment:")
-        print(''.join(aligned_seq1))
-        print(''.join(aligned_seq2))
+        print(''.join(aligned_s))
+        print(''.join(aligned_t))
 
     print(f"Score of the best local alignment: {max_score}")
-    print(f"Length of the best local alignment: {len(alignment)}")
+    print(f"Length of the best local alignment: {len(aligned_s)}")
 
 if __name__ == "__main__":
     main()
