@@ -14,10 +14,10 @@ def main():
     parser = argparse.ArgumentParser(description="Generate random DNA pairs and align them.")
     parser.add_argument('number_of_pairs', type=int, help="Number of pairs of sequences to generate and align")
     parser.add_argument('length_of_seq', type=int, help="Length of each sequence in a pair")
-    parser.add_argument('-m', '--match', type=int, default=1, help='Match score')
+    parser.add_argument('-m', '--match', type=int, default=1, help='Match reward')
     parser.add_argument('-s', '--mismatch', type=int, default=-1, help='Mismatch penalty')
     parser.add_argument('-d', '--indel', type=int, default=-1, help='Indel penalty')
-    parser.add_argument('-o', '--output', type=str, default="alignment_results.txt", help='Output file for alignment scores')
+    parser.add_argument('-o', '--output', type=str, default="results.txt", help='Output file for alignment scores')
 
     args = parser.parse_args()
 
