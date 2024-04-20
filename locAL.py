@@ -3,7 +3,7 @@ from typing import Tuple
 from Bio import SeqIO
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Perform local alignment on two DNA sequences. Enter signed scores.")
+    parser = argparse.ArgumentParser(description="Perform local alignment on two DNA sequences")
     parser.add_argument('seq_files', type=str, help='FASTA file containing two sequences')
     parser.add_argument('-m', '--match', type=int, default=2, help='Match reward')
     parser.add_argument('-s', '--mismatch', type=int, default=-1, help='Mismatch penalty')
