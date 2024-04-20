@@ -5,6 +5,9 @@ def random_dna(length):
     nucleotides = ['A', 'T', 'C', 'G']
     return ''.join(random.choice(nucleotides) for _ in range(length))
 
+def generate_pairs(num_pairs, length):
+    return [(random_dna(length), random_dna(length)) for _ in range(num_pairs)]
+
 def write_fasta(sequences, filename="randomDNA.fasta"):
     with open(filename, 'w') as f:
         for i, seq in enumerate(sequences):

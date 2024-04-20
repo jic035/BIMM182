@@ -9,6 +9,7 @@ def parse_args():
     parser.add_argument('-s', '--mismatch', type=int, default=-1, help='Mismatch penalty')
     parser.add_argument('-d', '--indel', type=int, default=-1, help='Indel penalty')
     parser.add_argument('-a', '--alignment', action='store_true', help='Display the alignment')
+    # From Python Docs:
     # action='store_true'
     # if the specific argument is provided in the command line, 
     # then the corresponding attribute is set to True. If the 
@@ -67,28 +68,6 @@ def LocalAlignment(s: str, t: str, match_reward: int, mismatch_penalty: int, ind
             j -= 1
 
     return max_score, aligned_s, aligned_t
-
-def format_blast_style_alignment(seq1: str, seq2: str, start1: int, start2: int):
-    alignment_length = len(seq1)
-    match_line = []
-
-    for i in range(alignment_length):
-        if seq1[i] == seq2[i]:
-            match_line.append('|')
-        else:
-            match_line.append(' ')
-    match_line = ''.join(match_line)
-
-    # Display in chunks if very long
-    chunk_size = 60
-    for i in range(0, alignment_length, chunk_size):
-        end1 = start1 + seq1[i:i+chunk_size].count('-') + len(seq1[i:i+chunk_size].replace('-', ''))
-        end2 = start2 + seq2[i:i+chunk_size].count('-') + len(seq2[i:i+chunk_size].replace('-', ''))
-        print(f"Query  {start1 + 1}  {seq1[i:i+chunk_size]}  {end1}")
-        print(f"             {match_line[i:i+chunk_size]}")
-        print(f"Subject  {start2 + 1}  {seq2[i:i+chunk_size]}  {end2}\n")
-        start1 = end1
-        start2 = end2
 
 def main():
     args = parse_args()
