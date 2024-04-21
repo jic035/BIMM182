@@ -22,10 +22,10 @@ def plot_histogram(lengths, bin):
 def main():
     parser = argparse.ArgumentParser(description="Plot a histogram of alignment lengths.")
     parser.add_argument('filename', type=str, help="The filename containing the alignment lengths.")
-    parser.add_argument('-b', '--bin', type=int, default=10, help='Histogram bin size')
+    parser.add_argument('-b', '--bin', type=int, default=10, help='Histogram bin size.')
     args = parser.parse_args()
-
-    lengths = read_lengths_from_file(args.filename)
+    filename = "./Alignment_out/" + args.filename
+    lengths = read_lengths_from_file(filename)
     plot_histogram(lengths, args.bin)
 
 if __name__ == "__main__":

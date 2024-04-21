@@ -17,7 +17,7 @@ def main():
     parser.add_argument('-m', '--match', type=int, default=1, help='Match reward')
     parser.add_argument('-s', '--mismatch', type=int, default=-1, help='Mismatch penalty')
     parser.add_argument('-d', '--indel', type=int, default=-1, help='Indel penalty')
-    parser.add_argument('-o', '--output', type=str, default="results.txt", help='Output file for alignment scores')
+    parser.add_argument('-o', '--output', type=str, default="./Alignment_out/results.txt", help='Output file for alignment scores')
 
     args = parser.parse_args()
 
@@ -28,7 +28,8 @@ def main():
     alignment_results = process_pairs(sequence_pairs, args.match, args.mismatch, args.indel)
     
     # Output results to a file
-    with open(args.output, 'w') as file:
+    filename = './Alignment_out/' + args.output
+    with open(filename, 'w') as file:
         for i, (_, alignment, _) in enumerate(alignment_results):
             file.write(f"Pair {i+1}: Length = {len(alignment)}\n")
 

@@ -14,11 +14,11 @@ To plot histogram, run `python3 PlotHist.py <length_file.txt> -b <bin size>`, re
 
 The first set of parameters:
 `python3 PlotHist.py Para1.txt -b 20`
-![image](./Parameter1.png)
+![image](./Histograms/Parameter1.png)
 
 The second set of parameters:
 `python3 PlotHist.py Para2.txt -b 5`
-![image](./Parameter2.png)
+![image](./Histograms/Parameter2.png)
 
 The lengths of the optimal local alignments are different. 
 For the first set of parameters, the lack of a penalty for introducing gaps allows the alignment to extend by adding gaps, thus increasing the length of the alignment. The resulting alignments might include several gaps that separate islands of matches. Therefore, even in sequences with low similarity,  mismatches can be avoided by adding gaps to improve the score.
@@ -36,7 +36,7 @@ Tried Parameter1:
 500 pairs length 1000, alignment length median/average = 1350
 ```
 From Excel, `l_p1(n)` is a linear function `y - 1.35x + 0.72`, with `R^2=1`, where x is random sequence length, y is alignment length
-![image](./Para1_Trend.png)
+![image](./Histograms/Para1_Trend.png)
 
 Tried Parameter2: 
 ```
@@ -49,7 +49,7 @@ Tried Parameter2:
 500 pairs length 1000, alignment length median/average = 10
 ```
 From Excel, `l_p2(n)` is a linear function `y = 0.005x + 5.21`, with `R^2=0.8939`, where x is random sequence length, y is alignment length
-![image](Para2_Trend.png)
+![image](./Histograms/Para2_Trend.png)
 
 #### Extra Credit:
 Parameter1: the slope of 1.35 means that the alignment length (y) grows faster than the sequence length (x). This attributes to 0 gap penalty that allows even distant matches to contribute to the same local alignment block
