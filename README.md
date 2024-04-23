@@ -55,3 +55,21 @@ From Excel, `l_p2(n)` is a linear function `y = 0.005x + 5.21`, with `R^2=0.8939
 Parameter1: the slope of 1.35 means that the alignment length (y) grows faster than the sequence length (x). This attributes to 0 gap penalty that allows even distant matches to contribute to the same local alignment block
 
 Parameter2: the slope of 0.05 indicates a much slower rate of increase in alignment length with increasing sequence length. The high penalties for both mismatches and indels mean that only the strongest matching segments contribute to the optimal local alignment. As sequence length increases, the addition to alignment length is minimal because most potential alignment extensions would incur penalties that outweigh their benefits.
+
+### Q3
+Ran `python3 length_function.py -3 -1 -0.75 -0.5 -0.33 -0.25 0`
+
+Found an abrupt change occurs at -1 to 0
+![image](Histograms/Alignment_lengths.png)
+
+Tried `python3 length_function.py -3 -1 -0.75 -0.5 -0.33 -0.25 0`
+
+The abrupt change occurs at around -1.38 penalty.
+![image](Histograms/Alignment_lengths_zoom_in.png)
+
+#### Extra Credit:
+For high penalties, mismatches and indels are discouraged to keep high alignment score. The algorithm favors very short and high-confidence alignments that have good matchings. The abrupt change occurs when the cost of introducing a mismatch or a gap is outweighed by the benefit of continuing the alignment. It's at this threshold where the algorithm shifts from a conservative to a more permissive behavior.
+
+### Q5
+I spent about 8h in this homework. I did not discuss with anyone. I looked up some code online ([Matplotlib reference](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html)) and used my CSE181 local alignment code (line 26 through 70 in `locAL.py`).
+

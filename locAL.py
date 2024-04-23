@@ -5,9 +5,9 @@ from Bio import SeqIO
 def parse_args():
     parser = argparse.ArgumentParser(description="Perform local alignment on two DNA sequences")
     parser.add_argument('seq_files', type=str, help='FASTA file containing two sequences')
-    parser.add_argument('-m', '--match', type=int, default=2, help='Match reward')
-    parser.add_argument('-s', '--mismatch', type=int, default=-1, help='Mismatch penalty')
-    parser.add_argument('-d', '--indel', type=int, default=-1, help='Indel penalty')
+    parser.add_argument('-m', '--match', type=float, default=2, help='Match reward')
+    parser.add_argument('-s', '--mismatch', type=float, default=-1, help='Mismatch penalty')
+    parser.add_argument('-d', '--indel', type=float, default=-1, help='Indel penalty')
     parser.add_argument('-a', '--alignment', action='store_true', help='Display the alignment')
     # From Python Docs:
     # action='store_true'
@@ -23,7 +23,7 @@ def read_sequences(filename):
         raise ValueError("Input file must contain exactly two sequences.")
     return sequences[0].seq, sequences[1].seq
 
-def LocalAlignment(s: str, t: str, match_reward: int, mismatch_penalty: int, indel_penalty: int) -> Tuple[int, str, str]:
+def LocalAlignment(s: str, t: str, match_reward: float, mismatch_penalty: float, indel_penalty: float) -> Tuple[float, str, str]:
     s_len = len(s)
     t_len = len(t)
     score_matrix = [[0] * (s_len + 1) for _ in range(t_len + 1)]
