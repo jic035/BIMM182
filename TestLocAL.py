@@ -1,4 +1,5 @@
 import numpy as np
+
 def local_alignment_with_length(seq1, seq2, match_score, mismatch_penalty, indel_penalty):
     n = len(seq1)
     m = len(seq2)
