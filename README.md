@@ -6,7 +6,16 @@ To run the program:
 
 Example usage:
 
-`python3 locAL.py p1seqs.fasta -m 1 -s -10 -d -1 -a`
+>`python3 locAL.py p1seqs.fasta -m 1 -s -10 -d -1 -a`
+
+Output:
+```
+Alignment:
+CCTA-AAACCACTCCGCAGA-AAAAGAATAAGGCCAAAA-CACGAC-TA--A-AATCGAAAGACATGAC-AAGT-AAA-CGAG-A-AAA-GA-AAA-AT-A-AA-CGACATACACACTTGTAGGA--A-A--A-ATAA-GAAA-A-AGGGGGAGACGAAGCAAAGAAAGGGC-AGCTAACCCT-CAAGG-A---AG-AACCAGACAG-AATAAGAA--A-AACCC---GAAA-GCCACCAAATG--AAA-G-GACA-ATAACACCTAAGA-GCAAAATC-AAT-AAAACACC----GAT---CCTCCGAGG-A-T-AACCA-AGA-G---A-GAC--CTAAGAACGACAA-GA--AACC-AATGA--A--AGA-A-AA--AGA---AAATGGACATCA-G----AACGACTTA-GAATGCTGGGA-AA-AA-GAAAAATTAT-----AAACG-AA-G-G-AT-G-G---GC-A-TAAATTG-G--ACG-AAG-C-CAAG-AGAT-AG-GC-CGA--GAT-AAAACGGAGAACAATAAG-G--GAGAC-C--ATGGAGAG--CAAACCAACC----GCAA-CAAAT--AA-AGGGGGG-GACAAAA-ACAAGACCAAC--CC-AAA-CT-GT-CA-GACAGG-A--A-G-----AGC-AATAAC--CAAGACA-GAAG-AA-GAAACAGG-AGA-CAAAC-A-AC--AT--AAT-AT--A-AGAGC-A-CCTAGCTAACAAAAAAGA---CCAGCAAACGGATTAAGA-AGAT--AAAGAAAACGT----AAA-----G--AACAG--T----C-AAG---GAACAAGCGA----TAATAA-ATGCA-GG-GAAAAAAT-GG-G--GA-CAG-ACGAAGGAAA--CAACCA-G-AAATAATCTAACGCATCGCAGAAGAT-GACACTGCGA--GAAAATACGAG-CCGTATAC-GACAC-A-AAAC--C--G--GGAATA-AAGA-A-AA---AAACCATAC-CCAAA-AAG-A-ACAAC-G--CGAAAGATGAAAC-GCTCCCAACT---CGGATG-AGCAAAGCC-GCC-AGGCC--A--AA--A-AAG-AGAAC-CAGAG-CAGA--GCGAAG--CT-A-TG-GGTAGAA-AA-C-ACCCTAAG-C--G-CGGGT-AGTAGAGAC--GAAAA-A-TAA-AAACAGG-C-TGACC-CGAACAT-AAGAGCCCACACAAGTAGAAGAACGGAAAGAAAACGAAAAGA
+CC-AGAAACCA-T-C-C---TAAAAG---AAGG---AAAGCA--A-ATAGGAGAA-C-AAA-ACA--A-TAA-TCAAAGCGA-TATAAAGGAGAAACATAACAACCG-C-TACAC-C----A--ATCACACCACA-AAGGAAAGATA-----AG-C---GCAAAG--A--G-AAG-T-ACCCTGC-A--TACCTA-CAACCA-A-A-TAA-AAG-AGGAGAA--CTGAGAAACGCCACCAAA--ACAAACGTGAC-GAT-A-A-CT-A-ATG--AAA-CGAATGAAAA-A--GGAGGATAGACCT-C-A--AATTCAA--AGAGATGAACATGACAGCTAA-AA-GACAACGAGCAA--AAATG-CTAGGAGACATAACCA-AGCTAAA--GAC--CAGGACCCAACGAC---CGAA--C---G-CAAGAATG-AAAATTA-GCCCCAAA--AAACGCGCA-CGAGAAAG-AACTAAA--GAGCCAC-AAAGACACAA-TAGA-AAGTGCTCGACGGA-CAAAA---A-AA-AA-AA-AGAAGAGACACAAAT--AGA-AACAAA--AA-CAAAAG-AAGCAAA-CGAATA------TGAC-AAAGA-AA-ACCAACTACCAAAAGC-AGTACATGACA--CATCATGCACACAGCGAA-AACAACAA-A-ATGAA-CAACGAAA-A--CA-ACCAAA-AAGACGAATCGAA-CA-GGAGAGAG-GATCC---C---CAAAAAAGAGGGCC--C-AAC----TAAGACA-ATGCAAAG-AAACG-CGACAAAGCCTCGCCAACAGAATCAACCAAAGCATGAAC-AGC-ACTTTTAA-AACATG--TGGCG-------CGGCGTCGAGCAGTAC---GG---TTCAA--ATGCAAA-AAT-T-A--CA----A-AA-A-AGACA-TGC-ACTG---A-AC---CCCGTA-A-AGA-ACGAGAAACTTCAAGAAGG-A-AGAAGACATAAGCCAAA--A-A-ACCAAATAA-TAGAC-ACAGCTCG--AGA--AAA-AG--CCCAAC-AAAC-GA--CAG-AAA---AG--AAGG--GGAGTAAGGAGAAGCA-AA-ACAGA-ACAG-GGGCG-AGAAC-GACTGCGG-AG--TAATCGA----AAGACATGAC----AAGTA-A-ACGAGAAAAGATTAATAAAC--GACAT-A-CAC-AA-A-CAA-A----A-ACAA-TAG-A-AAC-GAAA-AAAA--AAAA-A
+Score of the best local alignment: 119.0
+Length of the best local alignment: 1247
+```
 
 ### Q2
 To generate random sequences and align them with given parameters, run AlignSequences.py:
@@ -48,15 +57,15 @@ From Excel, `l_p1(n)` is a linear function `y - 1.35x + 0.72`, with `R^2=1`, whe
 ![image](./Histograms/Para1_Trend.png)
 
 Tried Parameter2: 
-```
-500 pairs length 20, alignment length median/average = 4.5
 
-500 pairs length 200, alignment length median/average = 7.2
+>500 pairs length 20, alignment length median/average = 4.5
 
-500 pairs length 600, alignment length median/average = 8.2
+>500 pairs length 200, alignment length median/average = 7.2
 
-500 pairs length 1000, alignment length median/average = 10
-```
+>500 pairs length 600, alignment length median/average = 8.2
+
+>500 pairs length 1000, alignment length median/average = 10
+
 From Excel, `l_p2(n)` is a linear function `y = 0.005x + 5.21`, with `R^2=0.8939`, where x is random sequence length, y is alignment length
 ![image](./Histograms/Para2_Trend.png)
 
@@ -117,5 +126,5 @@ Length of the best local alignment: 140
 
 
 ### Q5
-I used Python. I spent about 10h in this homework. I did not discuss with anyone. I looked at Piazza posts and Discussion slides. Hint for Q4 is helpful. I looked up some code online ([Matplotlib reference](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html)) and used my CSE181 local alignment code (line 26 through 70 in `locAL.py`).
+I used Python. I spent >10h in this homework. I did not discuss with anyone. I read Piazza posts and Discussion slides. Hint for Q4 is helpful. I looked up some code online ([Matplotlib reference](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html)) and used my CSE181 local alignment code (line 26 through 70 in `locAL.py`).
 
