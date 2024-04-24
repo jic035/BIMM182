@@ -70,6 +70,32 @@ The abrupt change occurs at around -1.38 penalty.
 #### Extra Credit:
 For high penalties, mismatches and indels are discouraged to keep high alignment score. The algorithm favors very short and high-confidence alignments that have good matchings. The abrupt change occurs when the cost of introducing a mismatch or a gap is outweighed by the benefit of continuing the alignment. It's at this threshold where the algorithm shifts from a conservative to a more permissive behavior.
 
+### Q4
+Memory usage for **linear-space** local alignment.
+
+`python3 Linear_locAL.py p4seqs.fasta -m 1 -s -10 -d -1 -a`
+
+```
+jiayic@Jiayis-MBP BIMM182_A2 % ps aux | grep locAL.py
+
+jiayic           27653  99.3  0.3 409760336  21072 s020  R+    6:12PM   0:45.14 /Library/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python Linear_locAL.py p4seqs.fasta -m 1 -s -10 -d -1 -a
+
+jiayic@Jiayis-MBP BIMM182_A2 % ps -o pid,rss,vsz,comm -p 27653
+
+  PID    RSS      VSZ COMM
+27653  11712 409891408 /Library/Frameworks/Python.framework/Versions/3.12/Resour
+```
+Running result:
+```
+jiayic@Jiayis-MBP BIMM182_A2 %  python3 Linear_locAL.py p4seqs.fasta -m 1 -s -10 -d -1 -a
+Alignment:
+TGTCCTACGC-TAG--CC-GC-TA-ATGGT-ATCGAAC--CCTG-TGTTTCCCGCGAGCAATCGTTA--TGAGCGA-TGG---GACCTCATCCCGGATTAGGATACTTCACGCTTACGAACTCTCAGGGAC--AGTTCCG
+TGT-CTAC-CATA-TACCTG-GT-CAT-GTGA-C-AACAGCC--ATG-TT--C-CGAG---T-G---GCTGAGCG-CT--TTCGACCTCATCCCGGATTAGGATACTTCACGCTTACGAACTCTCAGGGACAGAGTTCCG
+Score of the best local alignment: 56
+Length of the best local alignment: 140
+```
+
+
 ### Q5
-I spent about 8h in this homework. I did not discuss with anyone. I looked up some code online ([Matplotlib reference](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html)) and used my CSE181 local alignment code (line 26 through 70 in `locAL.py`).
+I used Python. I spent about 10h in this homework. I did not discuss with anyone. I looked at Piazza posts and Discussion slides. Hint for Q4 is helpful. I looked up some code online ([Matplotlib reference](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html)) and used my CSE181 local alignment code (line 26 through 70 in `locAL.py`).
 

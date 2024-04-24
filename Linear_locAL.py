@@ -86,6 +86,7 @@ def main():
         i, j= max_pos
         p_seq1 = seq1[i-max_length:i+1]
         p_seq2 = seq2[j-max_length:j+1]
+        print('sequences:', p_seq1, p_seq2)
         _, aligned_s, aligned_t = LocalAlignment(p_seq1, p_seq2, args.match, args.mismatch, args.indel)
         print("Alignment:")
         print(''.join(aligned_s))
