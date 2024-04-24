@@ -75,12 +75,14 @@ Parameter1: the slope of 1.35 means that the alignment length (y) grows faster t
 Parameter2: the slope of 0.05 indicates a much slower rate of increase in alignment length with increasing sequence length. The high penalties for both mismatches and indels mean that only the strongest matching segments contribute to the optimal local alignment. As sequence length increases, the addition to alignment length is minimal because most potential alignment extensions would incur penalties that outweigh their benefits.
 
 ### Q3
-Ran `python3 length_function.py -3 -1 -0.75 -0.5 -0.33 -0.25 0`
+`python3 length_function.py <a list of indel/mismatch parameters to try, separated by space>`
+
+For this problem, ran `python3 length_function.py -3 -1 -0.75 -0.5 -0.33 -0.25 0`
 
 Found an abrupt change occurs at -1 to 0
 ![image](Histograms/Alignment_lengths.png)
 
-Tried `python3 length_function.py -3 -1 -0.75 -0.5 -0.33 -0.25 0`
+To zoom in, tried `python3 length_function.py -3 -1 -0.75 -0.5 -0.33 -0.25 0`
 
 The abrupt change occurs at around -1.38 penalty.
 ![image](Histograms/Alignment_lengths_zoom_in.png)
@@ -89,7 +91,9 @@ The abrupt change occurs at around -1.38 penalty.
 For high penalties, mismatches and indels are discouraged to keep high alignment score. The algorithm favors very short and high-confidence alignments that have good matchings. The abrupt change occurs when the cost of introducing a mismatch or a gap is outweighed by the benefit of continuing the alignment. It's at this threshold where the algorithm shifts from a conservative to a more permissive behavior.
 
 ### Q4
-To save memory, did not keep the entire scoring matrix. Used two rows to compute scores: `prev_score_row` and `curr_score_row`. For traceback puspose, also used two rows (`prev_length_row` and `curr_length_row`) to compute the length of alignment that reaches each cell in the "matrix". Stored 1) the highest score, 2) the coordinates on the two sequences that generates the highest score, and 3) the length of alignment that produced the highest score.
+To save memory, did not keep the entire scoring matrix. Used two rows to compute scores: `prev_score_row` and `curr_score_row`. For traceback puspose, also used two rows (`prev_length_row` and `curr_length_row`) to compute the length of alignment that reaches each cell in the "matrix". 
+
+Stored 1) the highest score, 2) the coordinates on the two sequences that generates the highest score, and 3) the length of alignment that produced the highest score.
 
 With the coordinates and the length of alignment, it is possible to reconstruct the alignment.
 
@@ -123,7 +127,6 @@ TGT-CTAC-CATA-TACCTG-GT-CAT-GTGA-C-AACAGCC--ATG-TT--C-CGAG---T-G---GCTGAGCG-CT--
 Score of the best local alignment: 56
 Length of the best local alignment: 140
 ```
-
 
 ### Q5
 I used Python. I spent >10h in this homework. I did not discuss with anyone. I read Piazza posts and Discussion slides. Hint for Q4 is helpful. I looked up some code online ([Matplotlib reference](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html)) and used my CSE181 local alignment code (line 26 through 70 in `locAL.py`).
