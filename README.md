@@ -1,16 +1,25 @@
-# BIMM182
+# BIMM182 Assignment 2
+### Q1
+To run the program:
+
+`python3 locAL.py <seq files> -m <match> -s <mismatch> -d <indel> -a`, where `-a` option prints out the alignment itself.
+
+Example usage:
+
+`python3 locAL.py p1seqs.fasta -m 1 -s -10 -d -1 -a`
+
 ### Q2
 To generate random sequences and align them with given parameters, run AlignSequences.py:
 
 `python3 AlignSequences.py <number of pairs> <length of seq> -m <match> -s <mismatch> -d <indel>`
 
->Ran `python3 AlignSequences.py 500 1000 -m 1 -s -30 -d 0 -o Para1.txt` for first set of parameters. 
+>Ran `python3 AlignSequences.py 500 1000 -m 1 -s -30 -d 0 -o Para1.txt` for the first set of parameters. 
 
 >Ran `python3 AlignSequences.py 500 1000 -m 1 -s -30 -d -20 -o Para2.txt` for the second set.
 
-The output files, `Para1.txt` and `Para2.txt` are the collections of lengths of alignments for each random pair. The data is used to generate histogram.
+The output files (`length_file.txt`), `Para1.txt` and `Para2.txt` are the collections of lengths of alignments for each random pair. The data is used to generate histogram.
 
-To plot histogram, run `python3 PlotHist.py <length_file.txt> -b <bin size>`, remember to change the filename accordingly. The script reads the output file that contains the alignment lengths.
+To plot histogram, run `python3 PlotHist.py <length_file.txt> -b <number of bins>`. The script reads the output file that contains the alignment lengths.
 
 The first set of parameters:
 `python3 PlotHist.py Para1.txt -b 20`
@@ -71,6 +80,17 @@ The abrupt change occurs at around -1.38 penalty.
 For high penalties, mismatches and indels are discouraged to keep high alignment score. The algorithm favors very short and high-confidence alignments that have good matchings. The abrupt change occurs when the cost of introducing a mismatch or a gap is outweighed by the benefit of continuing the alignment. It's at this threshold where the algorithm shifts from a conservative to a more permissive behavior.
 
 ### Q4
+To save memory, did not keep the entire scoring matrix. Used two rows to compute scores: `prev_score_row` and `curr_score_row`. For traceback puspose, also used two rows (`prev_length_row` and `curr_length_row`) to compute the length of alignment that reaches each cell in the "matrix". Stored 1) the highest score, 2) the coordinates on the two sequences that generates the highest score, and 3) the length of alignment that produced the highest score.
+
+With the coordinates and the length of alignment, it is possible to reconstruct the alignment.
+
+Sliced the sequences. Starting from the coordinates, trace n bases backwards, where n = length of alignment.
+
+Since the sliced sequences are much shorter. It is possible to run locAL.py that computes and stores the entire scoring matrix, which makes backtracking straightforward.
+
+To run local alignment on the sliced sequences, `from locAL import LocalAlignment` function.
+
+---
 Memory usage for **linear-space** local alignment.
 
 `python3 Linear_locAL.py p4seqs.fasta -m 1 -s -10 -d -1 -a`

@@ -10,7 +10,6 @@ def process_pairs(pairs, match, mismatch, indel):
     return results
 
 def main():
-    # Setup command-line argument parsing
     parser = argparse.ArgumentParser(description="Generate random DNA pairs and align them.")
     parser.add_argument('number_of_pairs', type=int, help="Number of pairs of sequences to generate and align")
     parser.add_argument('length_of_seq', type=int, help="Length of each sequence in a pair")
@@ -20,14 +19,9 @@ def main():
     parser.add_argument('-o', '--output', type=str, default="./Alignment_out/results.txt", help='Output file for alignment scores')
 
     args = parser.parse_args()
-
-    # Generate pairs of random DNA sequences
     sequence_pairs = generate_pairs(args.number_of_pairs, args.length_of_seq)
-    
-    # Align each pair and collect results
     alignment_results = process_pairs(sequence_pairs, args.match, args.mismatch, args.indel)
     
-    # Output results to a file
     filename = './Alignment_out/' + args.output
     with open(filename, 'w') as file:
         for i, (_, alignment, _) in enumerate(alignment_results):
