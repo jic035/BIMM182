@@ -83,29 +83,60 @@ def linear_space_local_alignment(seq1, seq2, match_reward, mismatch_penalty, ind
 # print("locAL score:", score)
 
 def main():
-    start_time = time.time()
     args = parse_args()
-    seq1, seq2 = read_sequences(args.seq_files)
-    max_score, max_length, max_pos = linear_space_local_alignment(seq1, seq2, args.match, args.mismatch, args.indel)
-    if args.alignment:
-        i, j= max_pos
-        if i < max_length:
-            p_seq1 = seq1[:i+1]
-            p_seq2 = seq2[:j+1]
-        else:
-            p_seq1 = seq1[i-max_length:i+1]
-            p_seq2 = seq2[j-max_length:j+1]
-        print('sequences:', p_seq1, p_seq2)
-        _, aligned_s, aligned_t = LocalAlignment(p_seq1, p_seq2, args.match, args.mismatch, args.indel)
-        print("Alignment:")
-        print(''.join(aligned_s))
-        print(''.join(aligned_t))
+    sequences = list(SeqIO.parse(args.seq_files, 'fasta'))
 
-    print(f"Score of the best local alignment: {max_score}")
-    print(f"Length of the best local alignment: {max_length}")
-    end_time = time.time()
+    total_start_time = time.time()
+
+    for i in range(0, len(sequences), 2):
+        seq1, seq2 = sequences[i].seq, sequences[i + 1].seq
+        max_score, max_length, max_pos = linear_space_local_alignment(seq1, seq2, args.match, args.mismatch, args.indel)
+        print(f"Pair {i//2 + 1}:")
+        print(f"Score of the best local alignment: {max_score}")
+        print(f"Length of the best local alignment: {max_length}")
+
+        if args.alignment:
+            x, y= max_pos
+            if i < max_length:
+                p_seq1 = seq1[:x+1]
+                p_seq2 = seq2[:y+1]
+            else:
+                p_seq1 = seq1[x-max_length:x+1]
+                p_seq2 = seq2[y-max_length:y+1]
+            _, aligned_s, aligned_t = LocalAlignment(p_seq1, p_seq2, args.match, args.mismatch, args.indel)
+            print("Alignment:")
+            print(''.join(aligned_s))
+            print(''.join(aligned_t))
+
     if args.time:
-        print(f"Execution time: {end_time - start_time} seconds")
+        total_end_time = time.time()
+        print(f"Total execution time: {total_end_time - total_start_time} seconds")
+
+
+
+#     start_time = time.time()
+#     args = parse_args()
+#     seq1, seq2 = read_sequences(args.seq_files)
+#     max_score, max_length, max_pos = linear_space_local_alignment(seq1, seq2, args.match, args.mismatch, args.indel)
+#     if args.alignment:
+#         i, j= max_pos
+#         if i < max_length:
+#             p_seq1 = seq1[:i+1]
+#             p_seq2 = seq2[:j+1]
+#         else:
+#             p_seq1 = seq1[i-max_length:i+1]
+#             p_seq2 = seq2[j-max_length:j+1]
+#         print('sequences:', p_seq1, p_seq2)
+#         _, aligned_s, aligned_t = LocalAlignment(p_seq1, p_seq2, args.match, args.mismatch, args.indel)
+#         print("Alignment:")
+#         print(''.join(aligned_s))
+#         print(''.join(aligned_t))
+
+#     print(f"Score of the best local alignment: {max_score}")
+#     print(f"Length of the best local alignment: {max_length}")
+#     end_time = time.time()
+#     if args.time:
+#         print(f"Execution time: {end_time - start_time} seconds")
 
 if __name__ == "__main__":
     main()
