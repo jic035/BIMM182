@@ -18,6 +18,19 @@ Length of the best local alignment: 1247
 ```
 
 ### Q2
+To generate 500 pairs (1000 in total) of sequences of length 1000, run:
+
+`python3 randomDNA.py 1000 1000 -o 500pairs_random.txt`
+
+Output:
+```
+jiayic@Jiayis-MBP BIMM182_A2 % python3 randomDNA.py 1000 1000 -o 500pairs_random.txt
+A: 0.2503
+T: 0.2502
+C: 0.2491
+G: 0.2505
+```
+
 To generate random sequences and align them with given parameters, run AlignSequences.py:
 
 `python3 AlignSequences.py <number of pairs> <length of seq> -m <match> -s <mismatch> -d <indel>`
